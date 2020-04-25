@@ -1,5 +1,5 @@
 const Stopwatch = function(){
-  let duration = 0;
+  // let duration = 0;
   let timerGo = null;
   let time = 0;
 
@@ -30,6 +30,31 @@ const Stopwatch = function(){
     return time;
   }
 
+  this.ssStart = function(){
+    if (isRunning)
+      return new Error("Stop watch has already started")
+
+    isRunning = true;
+    startTime = new Date();
+  }
+
+  this.ssStop = function(){
+    if(!isRunning)
+      throw new Error("Not started");
+
+    isRunning = false;
+    endTime = new Date();
+
+    const seconds = (endTime.getTime() - startTime.getTime()) / 1000;
+    duration += seconds;
+  }
+
+  this.ssReset = function(){
+    startTime = null;
+    endTime = null;
+    isRunning = false;
+    duration = 0;
+  }
 
 
 };
