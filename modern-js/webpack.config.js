@@ -8,7 +8,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'baberl-loader'
+        loader: 'babel-loader'
       }
     ]
   }
