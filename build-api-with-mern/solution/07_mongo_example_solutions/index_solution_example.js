@@ -2,11 +2,9 @@ let mongoose = require('mongoose');
 // This is where we serve our DB!
 mongoose.connect(
     process.env.MONGODB_URI ||
-    'mongodb://localhost/build-api-with-mern'
+    'mongodb://localhost/my-first-api'
 );
 
+let Creature = require('./creature');
 
-let Post = require("./posts")
-
-
-module.exports.Post = Post;
+module.exports.Creature = Creature;

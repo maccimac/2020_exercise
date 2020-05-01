@@ -18,27 +18,27 @@ app.use(bodyParser.urlencoded({
 // get all
 app.get('/api/posts', (req, res) => {
   //db used as from line 8
-  db.Creature.find(err, allCreatures)=>{
+  db.Post.find(err, allPosts)=>{
     if(err){
       console.log(`index error: ${error}`)
     }else
     // res.json means we're sending/ responding back all our json
     res.json({
-      creatures: allCreatures
+      post: allPosts
     })
   }
 });
 
 // get one
 app.get('/api/posts/:id', (req, res) => {
-  db.Creature.findOne({
+  db.Post.findOne({
     // params is whatever is in the url, ex: :id
     _id: req.params.id
-  }), (err,creature) =>{
+  }), (err,Post) =>{
     if (err){
       console.log(`show error: ${error}`);
     }
-    res.json(creature);
+    res.json(Post);
   }
 
 });
@@ -46,12 +46,12 @@ app.get('/api/posts/:id', (req, res) => {
 // create new
 app.post('/api/posts', (req, res) => {
   // we are using req.body is because we are getting our data from form
-  let newCreature = new db.Creature(req.body);
-  newCreature.save( (err,creature) =>{
+  let newPost = new db.Post(req.body);
+  newPost.save( (err,Post) =>{
     if(err){
       console.log(`save error: ${err}`);
     }
-    console.log(`saved new creature: ${creature.name}`)
+    console.log(`saved new Post: ${Post.name}`)
   })
 });
 
