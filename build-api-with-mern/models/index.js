@@ -6,7 +6,8 @@ mongoose.connect(
 );
 
 
-let Post = require("./posts")
+
+let Post = require("./post")
 
 
 module.exports.Post = Post;

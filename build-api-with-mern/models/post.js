@@ -9,8 +9,8 @@ let PostSchema = new Schema({
   title: String,
   category: String,
   publishDate: Date,
-  modifyDates: [ Date ],
-  featuredImg: String
+  // // modifyDates: [ Date ],
+  // featuredImg: String
 })
 
 let Post = mongoose.model('Post', PostSchema);

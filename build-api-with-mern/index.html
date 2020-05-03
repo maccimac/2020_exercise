@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>MERN CRUD</title>
+
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+</head>
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        <h2>POST</h2>
+        <form id="post-form">
+          <div class="form-group">
+            <h4>Title</h4>
+            <input type="text" class="form-control" id="" name="title" placeholder="Title" value="new">
+          </div>
+          <div class="form-group">
+            <h4>Category</h4>
+            <input type="text" class="form-control" id="" name="category" placeholder="Category">
+          </div>
+          <button type="submit" class="btn btn-primary" onclick="addItem">Submit</button>
+        </form>
+      </div>
+      <div class="col-sm-8">
+        <h2>GET / DELETE</h2>
+        <div class="posts-holder">
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script>
+
+    // NOTE: PROJECT REQUIREMENTS:
+    // Use fetch
+    // Use ajax
+
+    //VARIBLES
+    const postForm = document.getElementById("post-form");
+    let postFormInputs = document.querySelectorAll("#post-form input");
+
+
+    const init = function(){
+      getData();
+
+      //Event listeners
+      postForm.addEventListener("submit", function(e){
+        addItem(e)
+      })
+    }
+
+    //GET
+    // NOTE: Check here for all options:
+    // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+
+    const getData = function(){
+      fetch("http://localhost:5000/api/posts").then(function(res){
+        return res.json();
+      })
+      .then(function(data){
+        console.log(data.post)
+        postList = data.post;
+        populatePosts(postList)
+      })
+      .catch(
+        function(err){
+          console.log(err)
+        }
+      )
+    }
+
+    const populatePosts = postList =>{
+      let postListHtml = "<ul>"
+
+      postList.map(function(val){
+
+        postListHtml += `<li data-id="${val._id}">
+          ${val.title}
+            <a href="#" class="btn btn-danger btn-small" onclick='deleteItem("${val._id}");' >Delete</a>
+          </form>
+        </li>`;
+      })
+
+      postListHtml +="</ul>"
+
+      document.querySelector(".posts-holder").innerHTML = postListHtml;
+
+    }
+
+    //DELETE
+    const deleteItem = id =>{
+      console.log(id);
+      let url = "http://localhost:5000/api/posts/"+id;
+      fetch(url, {
+        method: "DELETE"
+      }).then(function(res){
+        return res.json();
+      })
+      .then(function(data){
+        console.log(data)
+        location.reload();
+      })
+      .catch(
+        function(err){
+          console.log(err)
+        }
+      )
+    }
+
+    //POST
+    const addItem = event => {
+      event.preventDefault()
+
+      let formData = new FormData();
+
+      for(x of postFormInputs){
+        formData.append(x.name, x.value)
+      }
+
+      formData.append("publishDate", `${new Date()}`);
+      // console.log(formData.get("title"));
+
+      var object = {};
+      formData.forEach((value, key) => {object[key] = value});
+      var jsonBody = JSON.stringify(object);
+      console.log(jsonBody)
+
+      fetchPost();
+
+      function fetchPost(){
+        let url = "http://localhost:5000/api/posts/";
+        fetch(url, {
+          method: "POST",
+          headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: jsonBody
+        }).then(function(res){
+          //WHEN THE RESPONSE COMES BACK
+          // console.log(res.text())
+          //  res.json();
+          if (res.ok){
+             return res.json();
+           } else {
+             throw new Error ('Something went wrong with your fetch');
+           }
+        })
+        .then(function(data){
+          //WHEN WE HAVE THE
+          console.log(data)
+          alert("success")
+          location.reload();
+        })
+        .catch(function(err){
+            console.log(err)
+            alert(err.message)
+            location.reload();
+          }
+        )
+      }
+
+
+    }
+
+    init();
+
+
+  </script>
+
+</body>
+</html>
