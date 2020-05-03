@@ -13,9 +13,17 @@ let app = express();
 
 app.use(cors());
 // Body parser and encoding setup.
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+// app.use(bodyParser.urlencoded({
+//     extended: true
+// }));
+
+// NOTE: Body parser defines what res.body you want to send. Is it a formData or json etc
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
+
 
 // get all
 app.get('/api/posts', (req, res) => {
@@ -55,6 +63,7 @@ app.post('/api/posts', (req, res) => {
       console.log(`save error: ${err}`);
     }
     console.log(`saved new Post: ${post}`)
+    res.json(post)
   })
 });
 

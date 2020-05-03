@@ -25,7 +25,7 @@
           </div>
           <div class="form-group">
             <h4>Category</h4>
-            <input type="text" class="form-control" id="" name="category" placeholder="Category">
+            <input type="text" class="form-control" id="" name="category" placeholder="Category" value="cat">
           </div>
           <button type="submit" class="btn btn-primary" onclick="addItem">Submit</button>
         </form>
@@ -141,24 +141,25 @@
 
       fetchPost();
 
-      function fetchPost(){
+      async function fetchPost(){
         let url = "http://localhost:5000/api/posts/";
-        fetch(url, {
+        await fetch(url, {
           method: "POST",
-          headers:{
-            'Accept': 'application/json',
+          headers: {
+            'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
             'Content-Type': 'application/json'
           },
-          body: jsonBody
+          body: JSON.stringify(object)
         }).then(function(res){
           //WHEN THE RESPONSE COMES BACK
           // console.log(res.text())
           //  res.json();
           if (res.ok){
-             return res.json();
+             // return res.json();
            } else {
              throw new Error ('Something went wrong with your fetch');
            }
+           return res.json();
         })
         .then(function(data){
           //WHEN WE HAVE THE
