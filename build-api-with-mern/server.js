@@ -45,12 +45,13 @@ app.get('/api/posts/:id', (req, res) => {
   db.Post.findOne({
     // params is whatever is in the url, ex: :id
     _id: req.params.id
-  }), (err, post) =>{
+  }, (err, post) =>{
     if (err){
       console.log(`show error: ${error}`);
     }
-    res.json(post);
-  }
+    console.log(post)
+    res.json({post});
+  })
 
 });
 
@@ -88,6 +89,34 @@ app.delete('/api/posts/:id', (req, res) => {
 
 // update one
 app.put('/api/posts/:id', (req, res) => {
+  let postId = req.params.id;
+  db.Post.findOne({
+    _id: postId
+  }, (err, foundPost) => {
+    if (err){
+      console.log("Could not find creature")
+    }
+    foundPost.name = req.body.name || foundPost.name;
+    foundPost.category = req.body.category || foundPost.category;
+    // let newModifiedDate;
+    if (!foundPost.modifyDates || foundPost.modifyDates==[]){
+      foundPost.modifyDates = [new Date()]
+    }else{
+      foundPost.modifyDates = foundPost.modifyDates.push(new Date())
+    }
+
+    console.log(`updating ${foundPost.name}`)
+
+    foundPost.save((err, post) =>{
+      if (err){
+        console.log(`update error: ${err}`)
+      }
+      console.log(`updated: ${post.title}`);
+      res.json(post)
+    })
+
+
+  })
 });
 
 // This is where we serve our API!

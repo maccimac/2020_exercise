@@ -9,7 +9,7 @@ let PostSchema = new Schema({
   title: String,
   category: String,
   publishDate: Date,
-  // // modifyDates: [ Date ],
+  modifyDates: [ Date ],
   // featuredImg: String
 })
 
