@@ -1,0 +1,23 @@
+{
+    "course_title": "Sample Course",
+    "version": 1.1,
+    "update_date": "Jan. 1, 2019",
+    "data_messages": {
+        "data_incomplete_lessons": "Please complete all previous learning experiences before beginning ",
+        "data_resuming": "Resuming at last checkpoint.",
+        "data_saving": "Saving responses.",
+        "data_warning_menu": "Please complete all previous learning experiences before beginning ",
+        "data_completion_message": "You have finished all experiences.",
+        "data_error": "Internal Error Occured. Please reset the course now.",
+        "rotation_message":[
+            "This course is designed to be viewed in portrait mode.",
+            "Please re-adjust your screen to view the course content."
+        ]
+    },
+    "data_instructions": {
+        "data_swipe": "SWIPE UP TO CONTINUE",
+        "data_pdf": "Please close the PDF to return to the course.",
+        "data_iOS": "After you review and finalize your plan, save it.",
+        "data_pc": "After you finalize your plan, save it."
+    }
+}
