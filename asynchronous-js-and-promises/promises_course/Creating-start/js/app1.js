@@ -16,3 +16,23 @@ let asyncFunction2 = function() {
         }, 3000);
     });
 };
+
+
+let setTimoutP = function(time){
+  return new Promise(function(res, rej){
+    if (isNaN(time)){
+      rej("Num required");
+    }
+    setTimeout(res,time)
+  })
+}
+
+setTimoutP("hi")
+  .then(function(){
+    console.log("Test")
+  })
+  .catch(function(errData){
+    console.log(errData)
+  })
+
+setTimeout("jen")
